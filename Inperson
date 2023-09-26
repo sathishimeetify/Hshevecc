@@ -1,0 +1,206 @@
+package demo;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.By.ByCssSelector;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WindowType;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class Inperson {
+
+	public static void main(String[] args) throws Throwable {
+		System.setProperty("webdrvier.driver.chromedriver","C:\\driver\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+		driver.get("https://imeetify.com/Dashboard"); //https://useimeetify.com/DemoimeetUX710xcz/Dashboard
+		String parentWindowHandle = driver.getWindowHandle();
+		driver.manage().window().maximize();
+		driver.findElement(By.id("email")).sendKeys("purpleimeetify@gmail.com");
+		driver.findElement(By.id("password")).sendKeys("Purple@123");
+		driver.findElement(By.id("rememberMe")).click();
+		driver.findElement(By.xpath("/html/body/div[1]/div/form/div/div/div[2]/div/div/div/button")).click();
+		
+		// create the calendar ( inperson )
+		
+		driver.findElement(By.id("create_cal1")).click();
+		Thread.sleep(3000);
+		driver.findElement(By.id("create_calendar")).click();
+		Thread.sleep(1000);
+		
+		// calendar details
+	    
+	    driver.findElement(By.id("calendarname")).sendKeys("inperson");
+		driver.findElement(By.id("validationTextarea")).sendKeys("Automation testing demo");
+		// select the schedule open for 
+		WebElement k = driver.findElement(By.id("select2-days-container"));
+		k.click();
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		WebElement days = driver.findElement(By.id("days"));
+		Select ss = new Select(days);
+		ss.selectByIndex(3);
+        k.click();
+		driver.findElement(By.id("bufferslotTime")).sendKeys("20");
+		driver.findElement(By.id("bufferTime")).sendKeys("30");
+		WebElement select = driver.findElement(By.id("bufferTimeHorM"));
+		select.click();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		Select s = new Select(select);
+		s.selectByIndex(1);
+		driver.findElement(By.xpath("//*[@id=\"calendar-det\"]/div/div/div/div[2]/div/div/div[2]/div/div[3]/div/section/div/details[2]/summary/span[2]/label/span")).click();
+		driver.findElement(By.id("btn-next")).click();
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		System.out.println("1. Calendar details filled successfully ");
+		
+		// Availability 
+		
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		driver.findElement(By.id("mondaycheckid")).click();
+		driver.findElement(By.xpath("//*[@id=\"mondaydiv1\"]/div")).click();
+		WebElement o = driver.findElement(By.xpath("//*[@id=\"monfromtime\"]"));
+	    Select time = new Select(o);
+		time.selectByVisibleText("10:00 AM");
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		driver.findElement(By.xpath("//*[@id=\"mondaydiv2\"]/div")).click();
+		WebElement d = driver.findElement(By.xpath("//*[@id=\"montotime\"]"));
+		Select day = new Select(d);
+		day.selectByVisibleText("07:00 PM");
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		driver.findElement(By.xpath("//*[@id=\"mon_1\"]")).click();
+		Thread.sleep(5000);
+	    driver.findElement(By.xpath("/html/body/div[2]/div[2]/div/main/div/div/div/div[2]/div/div/div[2]/div/div[3]/div/div/button")).click();
+		System.out.println("2. successfully added avaliable time");
+		
+		
+		
+		// Advanced
+		
+		Thread.sleep(3000);
+		// set the unavaliable 30
+	    driver.findElement(By.xpath("//*[@id=\"calendar\"]/div[2]/div/table/tbody/tr/td/div/div/div[5]/div[1]/table/tbody/tr/td[7]")).click();
+		driver.findElement(By.xpath("//*[@id=\"monthly-calendar-event\"]/div/div/div[2]/div[3]/div/div[2]")).click();
+		driver.findElement(By.id("btn-On")).click();
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//*[@id=\"skip-target\"]/div/div/div/div[2]/div/div/div[2]/form/div[3]/div/div/button")).click();
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		System.out.println("3. advanced button clicked successfully");
+		
+		// Form
+		
+		Thread.sleep(3000);
+		driver.findElement(By.name("mobile_check")).click();
+		driver.findElement(By.id("chkPassport")).click();
+		driver.findElement(By.id("termstext")).sendKeys(" T&C Applied Testing");
+		driver.findElement(By.id("chkPassport_req")).click();
+		driver.findElement(By.id("chkPassport1")).click();
+		driver.findElement(By.id("chkPassport1_req")).click();
+		driver.findElement(By.id("promotionaltext")).sendKeys("automation testing");
+		driver.findElement(By.xpath("//*[@id=\"skip-target\"]/div/div/div/div[2]/div/div/div[2]/div[3]/button")).click();
+		driver.findElement(By.xpath("//*[@id=\"showmenus\"]/button[4]")).click();
+		driver.findElement(By.xpath("//*[@id=\"createradio\"]/div/div[1]/div/div[1]/input")).sendKeys("Gender");
+		driver.findElement(By.xpath("//*[@id=\"createradio\"]/div/div[1]/div/div[2]/div/div[1]/input")).sendKeys("Male");
+		driver.findElement(By.xpath("//*[@id=\"createradio\"]/div/div[2]/button[1]")).click();
+		driver.findElement(By.xpath("//*[@id=\"createradio\"]/div/div[1]/div/div[2]/div/div[2]/input")).sendKeys("Female");
+		driver.findElement(By.xpath("//*[@id=\"createradio\"]/div/div[2]/button[3]")).click();
+		Thread.sleep(6000);
+		driver.findElement(By.xpath("//*[@id=\"app\"]/div/div/div/span/button")).click();
+		driver.manage().timeouts().implicitlyWait(35, TimeUnit.SECONDS);
+		System.out.println("4. form applied successfully");	
+		
+		// click the list of the calendar 
+		
+		driver.findElement(By.xpath("//*[@id=\"sidebar\"]/div/div[2]/nav/ul/li[2]/div/ul/li[2]/a")).click();
+		Thread.sleep(3000);
+		
+		// click the calendar link 
+		driver.switchTo().newWindow(WindowType.TAB);
+		driver.get("https://imeetify.com/zendaya/inperson");//https://useimeetify.com/DemoimeetUX710xcz/demosk/inperson
+		Thread.sleep(3000);		
+		
+		// schedule the appiontment (01/10/2023 - 10.00AM)
+		
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//*[@id=\"demo-2\"]/div[2]/div[1]/table/tbody/tr[6]/td[1]")).click();
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		driver.findElement(By.id("10:00 AM")).click();
+		driver.findElement(By.id("nextbtn")).click();
+		Thread.sleep(5000);
+		
+		// confrimation form 
+		
+		driver.findElement(By.id("name")).sendKeys("Automation");
+		driver.findElement(By.id("lastname")).sendKeys("Testing");
+		driver.findElement(By.id("email")).sendKeys("testingdemo2002@gmail.com");
+		driver.findElement(By.id("mobile")).sendKeys("8838788654");
+		driver.findElement(By.id("btn_submit")).click();
+		System.out.println("5. appiontment booked in 01/10/2023");
+		Thread.sleep(5000);
+		driver.close();
+		
+		
+		// reschedule the appointment 02/10/2002
+		
+		driver.switchTo().window(parentWindowHandle);
+		Thread.sleep(2000);
+		//click the dashboard
+		driver.findElement(By.xpath("//*[@id=\"sidebar\"]/div/div[2]/nav/ul/li[1]/a")).click();
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//*[@id=\"calendar\"]/div[2]/div/table/tbody/tr/td/div/div/div[6]/div[2]/table/tbody/tr/td[1]/a/div")).click();
+		driver.findElement(By.xpath("//*[@id=\"meet-rec\"]/dl/dt/a/button")).click();
+		for (String windowHandle : driver.getWindowHandles()) {
+		    if (!windowHandle.equals(parentWindowHandle)) {
+		        driver.switchTo().window(windowHandle);
+		        break;
+		    }
+		}
+		
+	   // Reschedule the appiontment (Form) ( 01/10/23 to 02/10/2023 )
+	   
+	   driver.findElement(By.xpath("/html/body/div[1]/div/form/div/div[2]/div[2]/div/div/div/div[2]/div/div[2]/a/button")).click();
+	   driver.findElement(By.xpath("//*[@id=\"demo-2\"]/div[2]/div[1]/table/tbody/tr[2]/td[2]/div")).click();
+	   driver.findElement(By.id("10:00 AM")).click();
+	   driver.findElement(By.id("nextbtn")).click();
+	   Thread.sleep(4000);
+	   driver.findElement(By.xpath("/html/body/div[2]/div/div/div/div/div/div/div[2]/div/div/div[2]/form/div[4]/div/div/div/div")).click();
+	   Thread.sleep(500);
+	   driver.findElement(By.xpath("//*[@id=\"iti-0__item-us-preferred\"]")).click();
+	   driver.findElement(By.id("btn_submit")).click();
+	   Thread.sleep(5000);
+	   driver.close();
+	   driver.switchTo().window(parentWindowHandle);
+	   Thread.sleep(2000);
+	   driver.navigate().refresh();
+	   Thread.sleep(2000);
+	   
+	   // cancel the appiontment 
+	   
+	   driver.findElement(By.xpath("//*[@id=\"calendar\"]/div[2]/div/table/tbody/tr/td/div/div/div[6]/div[2]/table/tbody/tr/td[2]/a/div/span")).click();
+	   driver.findElement(By.xpath("//*[@id=\"meet-rec\"]/dl/dt/a")).click();
+	   for (String windowHandle : driver.getWindowHandles()) {
+		    if (!windowHandle.equals(parentWindowHandle)) {
+		        driver.switchTo().window(windowHandle);
+		        break;
+		    }
+		}
+		
+	   driver.findElement(By.xpath("/html/body/div[1]/div/form/div/div[2]/div[2]/div/div/div/div[2]/div/div[1]/a/button")).click();
+	   Thread.sleep(2000);
+	   System.out.println("7. successfully cancelled the appointment ");
+	   Thread.sleep(3000);
+	   driver.close();
+	   driver.switchTo().window(parentWindowHandle);
+	   driver.navigate().refresh();
+	   Thread.sleep(2000);
+	   
+	   // click the list of the calendar
+	   
+	   driver.findElement(By.xpath("//*[@id=\"sidebar\"]/div/div[2]/nav/ul/li[2]/a")).click();
+	   driver.findElement(By.xpath("//*[@id=\"sidebar\"]/div/div[2]/nav/ul/li[2]/div/ul/li[2]/a")).click();
+		
+	   System.err.println(" Inperson calendar no issue ");
+	}
+
+}
