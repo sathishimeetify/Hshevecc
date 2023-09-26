@@ -1,0 +1,220 @@
+package demo;
+
+import org.testng.annotations.Test;
+import org.testng.annotations.BeforeTest;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WindowType;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
+
+public class OverThePhone {
+   private ChromeDriver dirver;
+private String parentWindowHandle;
+	
+	@Test ( priority = 1)
+    public void calendar() throws Throwable {
+     dirver.get("https://imeetify.com/Dashboard");
+        String parentWindowHandle = dirver.getWindowHandle();
+		dirver.manage().window().maximize();
+		dirver.findElement(By.id("email")).sendKeys("purpleimeetify@gmail.com");
+		dirver.findElement(By.id("password")).sendKeys("Purple@123");
+		dirver.findElement(By.id("rememberMe")).click();
+		dirver.findElement(By.xpath("/html/body/div[1]/div/form/div/div/div[2]/div/div/div/button")).click();
+		
+		// create the calendar ( over the phone )
+		
+		dirver.findElement(By.id("create_cal1")).click();
+		dirver.findElement(By.id("Reg_phone_call")).click();
+		Thread.sleep(3000);
+		dirver.findElement(By.id("create_calendar")).click();
+		Thread.sleep(1000);
+		
+		// calendar details
+	    
+	    dirver.findElement(By.id("calendarname")).sendKeys("OverThePhone");
+		dirver.findElement(By.id("validationTextarea")).sendKeys("Automation testing demo");
+		// select the schedule open for 
+		WebElement k = dirver.findElement(By.id("select2-days-container"));
+		k.click();
+		dirver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		WebElement days = dirver.findElement(By.id("days"));
+		Select ss = new Select(days);
+		ss.selectByIndex(3);
+        k.click();
+		dirver.findElement(By.id("bufferslotTime")).sendKeys("20");
+		dirver.findElement(By.id("bufferTime")).sendKeys("30");
+		WebElement select = dirver.findElement(By.id("bufferTimeHorM"));
+		select.click();
+		dirver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		Select s = new Select(select);
+		s.selectByIndex(1);
+		dirver.findElement(By.xpath("//*[@id=\"calendar-det\"]/div/div/div/div[2]/div/div/div[2]/div/div[3]/div/section/div/details[2]/summary/span[2]/label/span")).click();
+		dirver.findElement(By.id("btn-next")).click();
+		dirver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
+		System.out.println("1. Calendar details filled successfully ");	
+		Thread.sleep(3000);
+
+	}
+	
+  @Test ( priority = 2)
+  public void Availability() throws Throwable {
+	 dirver.findElement(By.id("mondaycheckid")).click();
+	 dirver.findElement(By.xpath("//*[@id=\"mondaydiv1\"]/div")).click();
+	 WebElement o = dirver.findElement(By.xpath("//*[@id=\"monfromtime\"]"));
+     Select time = new Select(o);
+	 time.selectByVisibleText("10:00 AM");
+	 dirver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+	 dirver.findElement(By.xpath("//*[@id=\"mondaydiv2\"]/div")).click();
+	 WebElement d = dirver.findElement(By.xpath("//*[@id=\"montotime\"]"));
+	 Select day = new Select(d);
+	 day.selectByVisibleText("07:00 PM");
+	 dirver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+	 dirver.findElement(By.xpath("//*[@id=\"mon_1\"]")).click();
+	 Thread.sleep(3000);
+	 dirver.findElement(By.xpath("//*[@id=\"availability\"]/div/div/div/div[2]/div/div/div[2]/div/div[3]/div/div/button")).click();
+	 System.out.println("2. successfully added avaliable time");
+	
+}
+  
+  @Test ( priority = 3)
+  public void Advanced() throws Throwable {
+	    // set the unavaliable 30
+	    dirver.findElement(By.xpath("//*[@id=\"calendar\"]/div[2]/div/table/tbody/tr/td/div/div/div[5]/div[1]/table/tbody/tr/td[7]")).click();
+		dirver.findElement(By.xpath("//*[@id=\"monthly-calendar-event\"]/div/div/div[2]/div[3]/div/div[2]")).click();
+		dirver.findElement(By.id("btn-On")).click();
+		Thread.sleep(3000);
+		dirver.findElement(By.xpath("//*[@id=\"skip-target\"]/div/div/div/div[2]/div/div/div[2]/form/div[3]/div/div/button")).click();
+		dirver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		System.out.println("3. advanced button clicked successfully");
+	  
+  }
+  
+  @Test ( priority = 4)
+  public void customform() throws Throwable {
+		dirver.findElement(By.id("chkPassport")).click();
+		dirver.findElement(By.id("termstext")).sendKeys(" T&C Applied Testing");
+		dirver.findElement(By.id("chkPassport_req")).click();
+		dirver.findElement(By.id("chkPassport1")).click();
+		dirver.findElement(By.id("chkPassport1_req")).click();
+		dirver.findElement(By.id("promotionaltext")).sendKeys("automation testing");
+		dirver.findElement(By.xpath("//*[@id=\"skip-target\"]/div/div/div/div[2]/div/div/div[2]/div[3]/button")).click();
+		dirver.findElement(By.xpath("//*[@id=\"showmenus\"]/button[4]")).click();
+		dirver.findElement(By.xpath("//*[@id=\"createradio\"]/div/div[1]/div/div[1]/input")).sendKeys("Gender");
+		dirver.findElement(By.xpath("//*[@id=\"createradio\"]/div/div[1]/div/div[2]/div/div[1]/input")).sendKeys("Male");
+		dirver.findElement(By.xpath("//*[@id=\"createradio\"]/div/div[2]/button[1]")).click();
+		dirver.findElement(By.xpath("//*[@id=\"createradio\"]/div/div[1]/div/div[2]/div/div[2]/input")).sendKeys("Female");
+		dirver.findElement(By.xpath("//*[@id=\"createradio\"]/div/div[2]/button[3]")).click();
+		dirver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);		
+		Thread.sleep(3000);
+		dirver.findElement(By.xpath("//*[@id=\"app\"]/div/div/div/span/button")).click();
+		dirver.manage().timeouts().implicitlyWait(25, TimeUnit.SECONDS);
+		System.out.println("4. form applied successfully");	
+	  
+	  
+  }
+  
+  @Test ( priority = 5 )
+  public void appointment() throws Throwable {
+		// click the list of the calendar 
+		dirver.findElement(By.xpath("//*[@id=\"sidebar\"]/div/div[2]/nav/ul/li[2]/div/ul/li[2]/a")).click();
+		Thread.sleep(3000);
+		// click the calendar link 
+		dirver.switchTo().newWindow(WindowType.TAB);
+		dirver.get("https://imeetify.com/zendaya/OverThePhone");//https://useimeetify.com/DemoimeetUX710xcz/demosk/inperson
+		Thread.sleep(3000);
+		// schedule the appiontment (01/10/2023 - 10.00AM)
+		Thread.sleep(3000);
+		dirver.findElement(By.xpath("//*[@id=\"demo-2\"]/div[2]/div[1]/table/tbody/tr[6]/td[1]")).click();
+		dirver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		dirver.findElement(By.id("10:00 AM")).click();
+		dirver.findElement(By.id("nextbtn")).click();
+		// confrimation form 
+		dirver.findElement(By.id("name")).sendKeys("Automation");
+		dirver.findElement(By.id("lastname")).sendKeys("Testing");
+		dirver.findElement(By.id("email")).sendKeys("testingdemo2002@gmail.com");
+		dirver.findElement(By.id("mobile")).sendKeys("8838788654");
+		dirver.findElement(By.id("btn_submit")).click();
+		System.out.println("5. appiontment booked in 01/10/2023");
+		Thread.sleep(5000);
+		dirver.close();
+  }
+  
+  @Test (priority = 6)
+  public void reshudule() throws Throwable {
+	// reschedule the appointment 02/10/2002
+	dirver.switchTo().window(parentWindowHandle);
+    Thread.sleep(2000);
+	//click the dashboard
+	dirver.findElement(By.xpath("//*[@id=\"sidebar\"]/div/div[2]/nav/ul/li[1]/a")).click();
+	Thread.sleep(3000);
+	dirver.findElement(By.xpath("//*[@id=\"calendar\"]/div[2]/div/table/tbody/tr/td/div/div/div[6]/div[2]/table/tbody/tr/td[1]/a/div")).click();
+	dirver.findElement(By.xpath("//*[@id=\"meet-rec\"]/dl/dt/a/button")).click();
+	for (String windowHandle : dirver.getWindowHandles()) {
+	   if (!windowHandle.equals(parentWindowHandle)) {
+			 dirver.switchTo().window(windowHandle);
+			   break;
+	 }
+	}	
+	   dirver.findElement(By.xpath("/html/body/div[1]/div/form/div/div[2]/div[2]/div/div/div/div[2]/div/div[2]/a/button")).click();
+	   dirver.findElement(By.xpath("//*[@id=\"demo-2\"]/div[2]/div[1]/table/tbody/tr[2]/td[2]/div")).click();
+	   dirver.findElement(By.id("10:00 AM")).click();
+	   dirver.findElement(By.id("nextbtn")).click();
+	   Thread.sleep(4000);
+	   dirver.findElement(By.xpath("/html/body/div[2]/div/div/div/div/div/div/div[2]/div/div/div[2]/form/div[4]/div/div/div/div")).click();
+	   Thread.sleep(500);
+	   dirver.findElement(By.xpath("//*[@id=\"iti-0__item-us-preferred\"]")).click();
+	   dirver.findElement(By.id("btn_submit")).click();
+	   Thread.sleep(5000);
+	   dirver.close();
+	   dirver.switchTo().window(parentWindowHandle);
+	   Thread.sleep(2000);
+	   dirver.navigate().refresh();
+	   Thread.sleep(2000);
+	   System.out.println("6. successfully reshuduled 2/10/23");
+  }
+	
+  @Test (priority = 7)
+  public void cancel() throws Throwable {
+	  dirver.findElement(By.xpath("//*[@id=\"calendar\"]/div[2]/div/table/tbody/tr/td/div/div/div[6]/div[2]/table/tbody/tr/td[2]/a/div/span")).click();
+	   dirver.findElement(By.xpath("//*[@id=\"meet-rec\"]/dl/dt/a")).click();
+	   for (String windowHandle : dirver.getWindowHandles()) {
+		    if (!windowHandle.equals(parentWindowHandle)) {
+		        dirver.switchTo().window(windowHandle);
+		        break;
+		    }
+		}
+		
+	   dirver.findElement(By.xpath("/html/body/div[1]/div/form/div/div[2]/div[2]/div/div/div/div[2]/div/div[1]/a/button")).click();
+	   Thread.sleep(2000);
+	   System.out.println("7. successfully cancelled the appointment ");
+	   Thread.sleep(3000);
+	   dirver.close();
+	   dirver.switchTo().window(parentWindowHandle);
+	   dirver.navigate().refresh();
+	   Thread.sleep(2000);
+	   dirver.findElement(By.xpath("//*[@id=\"sidebar\"]/div/div[2]/nav/ul/li[2]/a")).click();
+	   dirver.findElement(By.xpath("//*[@id=\"sidebar\"]/div/div[2]/nav/ul/li[2]/div/ul/li[2]/a")).click();	  
+  }
+  
+  @BeforeTest
+  public void beforeTest() {
+	  System.setProperty("webdrvier.driver.chromedriver","C:\\driver\\chromedriver.exe");
+        dirver = new ChromeDriver();
+		parentWindowHandle = dirver.getWindowHandle();
+		dirver.manage().window().maximize();
+  
+  }
+
+  @AfterTest
+  public void afterTest() {
+	  System.err.println(" Over the calendar no issues ");
+  }
+
+}
